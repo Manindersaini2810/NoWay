@@ -7,7 +7,7 @@ const Home = () => {
 
   return (
     <div className="space-y-12">
-      <section className="overflow-hidden rounded-[2rem] bg-slate-50 px-6 py-16 shadow-sm sm:px-10 lg:px-16">
+      <section className="overflow-hidden rounded-4xl bg-slate-50 px-6 py-16 shadow-sm sm:px-10 lg:px-16">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
             <p className="mb-4 inline-flex rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white">
@@ -39,11 +39,11 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="relative rounded-[2rem] bg-white p-6 shadow-sm">
+          <div className="relative rounded-4xl bg-white p-6 shadow-sm">
             <img
               src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80"
               alt="Modern property"
-              className="h-[520px] w-full rounded-[1.75rem] object-cover"
+              className="h-130 w-full rounded-[1.75rem] object-cover"
             />
             <div className="absolute bottom-8 left-8 rounded-3xl bg-white/95 p-5 shadow-md ring-1 ring-slate-200">
               <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Featured home</p>
@@ -75,7 +75,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="rounded-[2rem] bg-slate-50 p-10 shadow-sm">
+      <section className="rounded-4xl bg-slate-50 p-10 shadow-sm">
         <div className="max-w-3xl">
           <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Testimonials</p>
           <h2 className="mt-2 text-4xl font-semibold text-slate-900">Everything starts with built trust.</h2>

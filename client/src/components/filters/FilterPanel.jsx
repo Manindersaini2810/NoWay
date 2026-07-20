@@ -9,7 +9,7 @@ const FilterPanel = ({ filters, setFilters, propertyTypes }) => {
   }
 
   return (
-    <aside className="surface-card rounded-[1.5rem] p-6">
+    <aside className="surface-card rounded-3xl p-6">
       <h2 className="text-lg font-semibold text-slate-900">Filter listings</h2>
       <p className="mt-1 text-sm text-slate-500">Refine the results by property type, price, size, and location.</p>
 

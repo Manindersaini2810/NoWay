@@ -29,7 +29,7 @@ const PropertyDetail = () => {
             </div>
           </div>
 
-          <div className="rounded-[1.5rem] bg-slate-900 p-6 text-white">
+          <div className="rounded-3xl bg-slate-900 p-6 text-white">
             <p className="text-sm uppercase tracking-[0.24em] text-slate-400">Asking price</p>
             <p className="mt-2 text-3xl font-semibold">${property.price.toLocaleString()}</p>
             <p className="mt-2 text-slate-400">{property.area.toLocaleString()} sqft • {property.city}</p>
@@ -42,16 +42,16 @@ const PropertyDetail = () => {
 
       <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="space-y-4">
-          <img src={property.images[0]} alt={property.title} className="h-80 w-full rounded-[1.5rem] object-cover shadow-sm" />
+          <img src={property.images[0]} alt={property.title} className="h-80 w-full rounded-3xl object-cover shadow-sm" />
           <div className="grid gap-4 sm:grid-cols-2">
             {property.images.slice(1).map((image, index) => (
-              <img key={index} src={image} alt={`${property.title} ${index + 2}`} className="h-48 w-full rounded-[1.5rem] object-cover shadow-sm" />
+              <img key={index} src={image} alt={`${property.title} ${index + 2}`} className="h-48 w-full rounded-3xl object-cover shadow-sm" />
             ))}
           </div>
         </div>
 
         <div className="space-y-6">
-          <div className="surface-card rounded-[1.5rem] p-6">
+          <div className="surface-card rounded-3xl p-6">
             <h2 className="text-xl font-semibold text-slate-900">Structural specs</h2>
             <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200">
               <table className="min-w-full text-sm text-left text-slate-600">
@@ -86,11 +86,11 @@ const PropertyDetail = () => {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="surface-card rounded-[1.5rem] p-6">
+            <div className="surface-card rounded-3xl p-6">
               <h3 className="font-semibold text-slate-900">Map goes here</h3>
               <p className="mt-2 text-sm text-slate-600">This placeholder will be connected to a map provider later.</p>
             </div>
-            <div className="surface-card rounded-[1.5rem] p-6">
+            <div className="surface-card rounded-3xl p-6">
               <h3 className="font-semibold text-slate-900">Estimated Market Value</h3>
               <p className="mt-2 text-sm text-slate-600">This placeholder will display a future valuation model.</p>
             </div>

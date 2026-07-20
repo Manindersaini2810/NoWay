@@ -34,7 +34,7 @@ const Search = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-[2rem] bg-slate-50 px-6 py-8 shadow-sm sm:px-8">
+      <div className="rounded-4xl bg-slate-50 px-6 py-8 shadow-sm sm:px-8">
         <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">Search listings</p>
         <h1 className="mt-2 text-3xl font-semibold text-slate-900">Find the right commercial space</h1>
         <p className="mt-3 max-w-2xl text-slate-600">Filter listings quickly.</p>

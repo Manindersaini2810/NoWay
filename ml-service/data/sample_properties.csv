@@ -1,0 +1,11 @@
+area,yearBuilt,floors,parking,ceilingHeight,buildingClass,occupancyStatus,price
+10000,1990,1,20,18,Class A,Occupied,2500000
+15000,2005,2,30,22,Class B,Vacant,4200000
+20000,2010,1,15,20,Class A,Occupied,5200000
+25000,2015,3,40,24,Class A,Vacant,7600000
+30000,2000,2,25,16,Class C,Occupied,6100000
+35000,2008,1,35,18,Class B,Vacant,6800000
+40000,2012,2,50,20,Class A,Occupied,9000000
+45000,2018,3,60,24,Class A,Vacant,11200000
+50000,1998,1,20,15,Class C,Occupied,8400000
+55000,2001,2,30,17,Class B,Vacant,9800000

@@ -15,7 +15,7 @@ const Auth = () => {
   return (
     <div className="min-h-screen bg-slate-100 px-4 py-10 sm:px-6 lg:px-8">
       <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="relative overflow-hidden rounded-[2rem] bg-slate-950 p-8 text-white shadow-2xl">
+        <div className="relative overflow-hidden rounded-4xl bg-slate-950 p-8 text-white shadow-2xl">
           <div className="max-w-lg">
             <p className="text-sm  tracking-[0.5em] text-gray-200">NoWay</p>
             {/* <h1 className="mt-6 text-5xl font-semibold leading-tight text-white sm:text-6xl">Design with us</h1>
@@ -23,7 +23,7 @@ const Auth = () => {
           </div>
 
           <div className="mt-12 flex justify-center px-4 sm:px-0">
-            <div className="relative h-[460px] w-full max-w-[460px] overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-5 shadow-2xl">
+            <div className="relative h-115 w-full max-w-115 overflow-hidden rounded-4xl border border-white/10 bg-white/5 p-5 shadow-2xl">
               <img src={authLogo} alt="NoWay logo" className="h-full w-full object-contain" />
               <div className="pointer-events-none absolute -left-8 top-8 h-24 w-24 rounded-full border border-white/10 bg-white/5 blur-xl" />
               <div className="pointer-events-none absolute right-8 bottom-12 h-16 w-16 rounded-full border border-white/10 bg-white/5 opacity-80" />
@@ -31,7 +31,7 @@ const Auth = () => {
           </div>
         </div>
 
-        <div className="rounded-[2rem] bg-white p-8 shadow-xl ring-1 ring-slate-200 sm:p-10">
+        <div className="rounded-4xl bg-white p-8 shadow-xl ring-1 ring-slate-200 sm:p-10">
           <div className="flex items-center justify-between gap-6">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">{isRegister ? 'Sign up now' : 'Log in'}</p>

@@ -27,7 +27,7 @@ const AddEditListing = () => {
   }
 
   return (
-    <div className="mx-auto max-w-4xl rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+    <div className="mx-auto max-w-4xl rounded-4xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
       <div className="mb-8">
         <p className="text-sm font-semibold uppercase tracking-[0.24em] text-blue-600">Add or edit listing</p>
         <h1 className="mt-2 text-3xl font-semibold text-slate-900">Create a commercial property listing</h1>

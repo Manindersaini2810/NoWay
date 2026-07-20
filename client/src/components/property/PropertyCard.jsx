@@ -4,7 +4,7 @@ const PropertyCard = ({ property }) => {
   const imageUrl = property.images?.[0] || property.image || 'https://via.placeholder.com/1200x800?text=Property'
 
   return (
-    <article className="group relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:border-slate-900/50 hover:shadow-xl">
+    <article className="group relative overflow-hidden rounded-4xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:border-slate-900/50 hover:shadow-xl">
       <div className="relative overflow-hidden rounded-t-[1.85rem]">
         <img
           src={imageUrl}
