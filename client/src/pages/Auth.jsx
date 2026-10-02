@@ -5,11 +5,71 @@ import authLogo from '../assets/logo.png'
 const Auth = () => {
   const location = useLocation()
   const isRegister = location.pathname === '/register'
-  const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', password: '' })
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    password: ''
+  })
+  const [acceptedTerms, setAcceptedTerms] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
 
   const handleChange = (event) => {
     const { name, value } = event.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    setErrorMessage('')
+    setSuccessMessage('')
+
+    if (isRegister && !acceptedTerms) {
+      setErrorMessage('Please accept the Terms of use and Privacy Policy to register.')
+      return
+    }
+
+    setIsSubmitting(true)
+    try {
+      const apiUrl = (import.meta.env.VITE_API_URL || 'http://localhost:4000').replace(/\/+$/, '')
+      const endpoint = isRegister ? 'register' : 'login'
+      const body = isRegister
+        ? {
+            name: [formData.firstName.trim(), formData.lastName.trim()].filter(Boolean).join(' '),
+            email: formData.email.trim(),
+            password: formData.password,
+            phone: formData.phone.trim()
+          }
+        : { email: formData.email.trim(), password: formData.password }
+      const response = await fetch(`${apiUrl}/api/auth/${endpoint}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      })
+      const result = await response.json()
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || 'Authentication failed. Please try again.')
+      }
+
+      localStorage.setItem('accessToken', result.data.accessToken)
+      if (result.data.refreshToken) {
+        localStorage.setItem('refreshToken', result.data.refreshToken)
+      }
+      localStorage.setItem('user', JSON.stringify(result.data.user))
+      setSuccessMessage(isRegister ? 'Your account was created successfully.' : 'You are now logged in.')
+    } catch (error) {
+      setErrorMessage(
+        error instanceof TypeError
+          ? 'Could not reach the API. Make sure the backend is running and VITE_API_URL points to it.'
+          : error.message
+      )
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -44,13 +104,14 @@ const Auth = () => {
 
           <p className="mt-2 text-sm text-slate-500">{isRegister ? 'Join with a simple form.' : 'Enter your account details.'}</p>
 
-          <form className="mt-8 space-y-5">
+          <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
             {isRegister && (
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label className="mb-2 block text-sm font-medium text-slate-700">First name</label>
                   <input
                     name="firstName"
+                    required
                     value={formData.firstName}
                     onChange={handleChange}
                     placeholder="First name"
@@ -75,6 +136,7 @@ const Auth = () => {
               <input
                 name="email"
                 type="email"
+                required
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="you@example.com"
@@ -88,6 +150,8 @@ const Auth = () => {
                 <input
                   name="phone"
                   type="tel"
+                  value={formData.phone}
+                  onChange={handleChange}
                   placeholder="+1 555 123 4567"
                   className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700"
                 />
@@ -99,6 +163,8 @@ const Auth = () => {
               <input
                 name="password"
                 type="password"
+                minLength={8}
+                required
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Enter password"
@@ -109,7 +175,12 @@ const Auth = () => {
             {isRegister && (
               <div className="space-y-3 text-sm text-slate-600">
                 <label className="inline-flex items-start gap-3">
-                  <input type="checkbox" className="mt-1 h-4 w-4 rounded border-slate-300 text-slate-900" />
+                  <input
+                    type="checkbox"
+                    checked={acceptedTerms}
+                    onChange={(event) => setAcceptedTerms(event.target.checked)}
+                    className="mt-1 h-4 w-4 rounded border-slate-300 text-slate-900"
+                  />
                   <span>I agree to the <span className="font-semibold text-slate-900">Terms of use</span> and <span className="font-semibold text-slate-900">Privacy Policy</span>.</span>
                 </label>
                 <label className="inline-flex items-start gap-3">
@@ -119,8 +190,14 @@ const Auth = () => {
               </div>
             )}
 
-            <button type="button" className="w-full rounded-full bg-slate-900 px-4 py-3 text-base font-semibold text-white shadow-lg transition hover:bg-slate-800">
-              {isRegister ? 'Sign up' : 'Log in'}
+            {errorMessage && <p role="alert" className="text-sm font-medium text-red-600">{errorMessage}</p>}
+            {successMessage && <p role="status" className="text-sm font-medium text-emerald-700">{successMessage}</p>}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full rounded-full bg-slate-900 px-4 py-3 text-base font-semibold text-white shadow-lg transition hover:bg-slate-800 disabled:cursor-wait disabled:opacity-60"
+            >
+              {isSubmitting ? 'Please wait…' : isRegister ? 'Sign up' : 'Log in'}
             </button>
           </form>
 
