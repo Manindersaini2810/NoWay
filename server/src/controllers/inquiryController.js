@@ -6,6 +6,9 @@ export const createInquiry = async (req, res, next) => {
     const { propertyId, message } = req.body
     const property = await Property.findById(propertyId)
     if (!property) return res.status(404).json({ success: false, message: 'Property not found' })
+    if (property.brokerId?.toString() === req.user.id) {
+      return res.status(400).json({ success: false, message: 'You cannot inquire about your own listing' })
+    }
 
     const inquiry = await Inquiry.create({
       propertyId,

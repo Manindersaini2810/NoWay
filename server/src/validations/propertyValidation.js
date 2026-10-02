@@ -1,11 +1,11 @@
 import Joi from 'joi'
 
 export const propertyCreateSchema = Joi.object({
-  title: Joi.string().required(),
-  description: Joi.string().required(),
+  title: Joi.string().trim().required(),
+  description: Joi.string().trim().required(),
   listingType: Joi.string().valid('sale', 'lease').required(),
   propertyType: Joi.string().valid('office', 'retail', 'warehouse', 'industrial', 'land', 'mixed-use').required(),
-  price: Joi.number().positive().required(),
+  price: Joi.number().min(0).required(),
   pricePerSqFt: Joi.number().positive().optional(),
   capRate: Joi.number().optional(),
   area: Joi.object({
@@ -84,4 +84,4 @@ export const propertyUpdateSchema = Joi.object({
   }).optional(),
   amenities: Joi.array().items(Joi.string()).optional(),
   status: Joi.string().valid('active', 'pending', 'sold', 'leased').optional()
-})
+}).min(1)

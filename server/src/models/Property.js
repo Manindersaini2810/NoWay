@@ -38,7 +38,10 @@ const propertySchema = new mongoose.Schema(
         },
         coordinates: {
           type: [Number],
-          index: '2dsphere'
+          validate: {
+            validator: (coordinates) => !coordinates || coordinates.length === 2,
+            message: 'GeoJSON coordinates must be [longitude, latitude]'
+          }
         }
       }
     },
@@ -55,6 +58,8 @@ const propertySchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
+
+propertySchema.index({ 'location.geo': '2dsphere' })
 
 const Property = mongoose.model('Property', propertySchema)
 export default Property

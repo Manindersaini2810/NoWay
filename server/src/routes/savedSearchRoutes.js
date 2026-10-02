@@ -1,12 +1,14 @@
 import express from 'express'
 import SavedSearch from '../models/SavedSearch.js'
 import { auth } from '../middleware/auth.js'
+import { validateRequest } from '../utils/validateRequest.js'
+import { savedSearchCreateSchema, savedSearchUpdateSchema } from '../validations/savedSearchValidation.js'
 
 const router = express.Router()
 
 router.use(auth)
 
-router.post('/', async (req, res, next) => {
+router.post('/', validateRequest(savedSearchCreateSchema), async (req, res, next) => {
   try {
     const savedSearch = await SavedSearch.create({ ...req.body, userId: req.user.id })
     res.status(201).json({ success: true, data: savedSearch })
@@ -34,7 +36,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', validateRequest(savedSearchUpdateSchema), async (req, res, next) => {
   try {
     const item = await SavedSearch.findOneAndUpdate({ _id: req.params.id, userId: req.user.id }, req.body, { new: true })
     if (!item) return res.status(404).json({ success: false, message: 'Saved search not found' })

@@ -1,30 +1,40 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import User from '../models/User.js'
+import { config } from '../config/index.js'
 
-const signToken = (user, secret, expiresIn) =>
-  jwt.sign({ id: user._id, role: user.role, email: user.email }, secret, { expiresIn })
+const signToken = (user, secret, expiresIn) => {
+  if (!secret) throw new Error('JWT secrets are not configured')
+  return jwt.sign({ id: user._id.toString(), role: user.role, email: user.email }, secret, { expiresIn })
+}
+
+const serializeUser = (user) => ({
+  id: user._id,
+  name: user.name,
+  email: user.email,
+  role: user.role,
+  phone: user.phone
+})
+
+const tokenResponse = (user, includeRefreshToken = true) => {
+  const data = {
+    accessToken: signToken(user, config.jwtSecret, '15m'),
+    user: serializeUser(user)
+  }
+  if (includeRefreshToken) data.refreshToken = signToken(user, config.jwtRefreshSecret, '7d')
+  return data
+}
 
 export const register = async (req, res, next) => {
   try {
-    const { name, email, password, role, phone, company } = req.body
+    const { name, firstName, lastName, email, password, role, phone, company } = req.body
     const existing = await User.findOne({ email })
-    if (existing) return res.status(400).json({ success: false, message: 'Email already registered' })
+    if (existing) return res.status(409).json({ success: false, message: 'Email already registered' })
 
     const passwordHash = await bcrypt.hash(password, 12)
-    const user = await User.create({ name, email, passwordHash, role: role || 'buyer', phone, company })
-
-    const accessToken = signToken(user, process.env.JWT_SECRET, '15m')
-    const refreshToken = signToken(user, process.env.JWT_REFRESH_SECRET, '7d')
-
-    res.json({
-      success: true,
-      data: {
-        accessToken,
-        refreshToken,
-        user: { id: user._id, email: user.email, role: user.role, name: user.name }
-      }
-    })
+    const fullName = name || [firstName, lastName].filter(Boolean).join(' ')
+    const user = await User.create({ name: fullName, email, passwordHash, role: role || 'buyer', phone, company })
+    res.status(201).json({ success: true, data: tokenResponse(user) })
   } catch (error) {
     next(error)
   }
@@ -34,22 +44,10 @@ export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body
     const user = await User.findOne({ email })
-    if (!user) return res.status(401).json({ success: false, message: 'Invalid credentials' })
-
-    const valid = await bcrypt.compare(password, user.passwordHash)
-    if (!valid) return res.status(401).json({ success: false, message: 'Invalid credentials' })
-
-    const accessToken = signToken(user, process.env.JWT_SECRET, '15m')
-    const refreshToken = signToken(user, process.env.JWT_REFRESH_SECRET, '7d')
-
-    res.json({
-      success: true,
-      data: {
-        accessToken,
-        refreshToken,
-        user: { id: user._id, email: user.email, role: user.role, name: user.name }
-      }
-    })
+    if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
+      return res.status(401).json({ success: false, message: 'Invalid credentials' })
+    }
+    res.json({ success: true, data: tokenResponse(user) })
   } catch (error) {
     next(error)
   }
@@ -57,16 +55,18 @@ export const login = async (req, res, next) => {
 
 export const refreshToken = async (req, res, next) => {
   try {
-    const { refreshToken } = req.body
-    if (!refreshToken) return res.status(401).json({ success: false, message: 'Refresh token required' })
-
-    const payload = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET)
+    if (!config.jwtRefreshSecret) throw new Error('JWT_REFRESH_SECRET is not configured')
+    const payload = jwt.verify(req.body.refreshToken, config.jwtRefreshSecret)
+    if (typeof payload === 'string' || !payload.id) {
+      return res.status(401).json({ success: false, message: 'Invalid refresh token' })
+    }
     const user = await User.findById(payload.id)
     if (!user) return res.status(401).json({ success: false, message: 'User not found' })
-
-    const accessToken = signToken(user, process.env.JWT_SECRET, '15m')
-    res.json({ success: true, data: { accessToken } })
+    res.json({ success: true, data: { accessToken: signToken(user, config.jwtSecret, '15m') } })
   } catch (error) {
-    next({ status: 401, message: 'Invalid refresh token' })
+    if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
+      return res.status(401).json({ success: false, message: 'Invalid or expired refresh token' })
+    }
+    next(error)
   }
 }

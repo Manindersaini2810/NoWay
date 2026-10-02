@@ -5,7 +5,8 @@ import {
   getProfile,
   updateProfile,
   getFavorites,
-  addFavorite
+  addFavorite,
+  removeFavorite
 } from '../controllers/userController.js'
 import { updateProfileSchema } from '../validations/userValidation.js'
 
@@ -15,5 +16,6 @@ router.get('/me', auth, getProfile)
 router.put('/me', auth, validateRequest(updateProfileSchema), updateProfile)
 router.get('/me/favorites', auth, getFavorites)
 router.post('/me/favorites/:propertyId', auth, addFavorite)
+router.delete('/me/favorites/:propertyId', auth, removeFavorite)
 
 export default router
