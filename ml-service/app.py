@@ -1,41 +1,47 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
-from typing import Optional
-from model import load_model
+from functools import lru_cache
+from typing import Literal
 
-app = FastAPI(title='NoWay ML Service')
-model = load_model()
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
+
+from model import MODEL_PATH, load_model, predict_price
+
+app = FastAPI(title="NoWay Commercial Valuation API", version="1.0.0")
+
 
 class PredictionRequest(BaseModel):
-    area: float
-    propertyType: str
-    buildingClass: Optional[str] = 'Class A'
-    yearBuilt: Optional[int] = 2000
-    floors: Optional[int] = 1
-    parking: Optional[int] = 0
-    ceilingHeight: Optional[float] = 10.0
-    occupancyStatus: Optional[str] = 'Occupied'
-    city: Optional[str] = 'Unknown'
-    lat: Optional[float] = 0.0
-    lng: Optional[float] = 0.0
+    area: float = Field(gt=0)
+    propertyType: Literal["office", "retail", "warehouse", "industrial", "land", "mixed-use"]
+    buildingClass: Literal["Class A", "Class B", "Class C"] = "Class B"
+    yearBuilt: int = Field(default=2000, ge=1800, le=2100)
+    floors: int = Field(default=1, ge=1)
+    parkingSpaces: int = Field(default=0, ge=0)
+    city: str = "Unknown"
+    lat: float = Field(default=0.0, ge=-90, le=90)
+    lng: float = Field(default=0.0, ge=-180, le=180)
+    ceilingHeightFt: float = Field(default=10.0, gt=0)
+    occupancyStatus: Literal["Vacant", "Occupied"] = "Occupied"
 
-class PredictionResponse(BaseModel):
-    estimatedPrice: float
 
-@app.get('/')
-def root():
-    return {'service': 'NoWay ML Service', 'status': 'ready'}
+@lru_cache(maxsize=1)
+def get_model():
+    return load_model()
 
-@app.post('/predict', response_model=PredictionResponse)
-def predict(data: PredictionRequest):
-    features = [
-        data.area,
-        data.yearBuilt,
-        data.floors,
-        data.parking,
-        data.ceilingHeight,
-        1 if data.buildingClass == 'Class A' else 0,
-        1 if data.occupancyStatus == 'Vacant' else 0
-    ]
-    prediction = model.predict([features])[0]
-    return {'estimatedPrice': float(prediction)}
+
+@app.get("/health")
+def health():
+    return {"status": "ok", "modelLoaded": MODEL_PATH.is_file()}
+
+
+@app.post("/predict")
+def predict(request: PredictionRequest):
+    try:
+        model = get_model()
+    except RuntimeError as error:
+        raise HTTPException(status_code=503, detail=str(error)) from error
+
+    estimated_price, price_per_sqft = predict_price(model, request.model_dump())
+    return {
+        "estimatedPrice": estimated_price,
+        "estimatedPricePerSqFt": price_per_sqft,
+    }
