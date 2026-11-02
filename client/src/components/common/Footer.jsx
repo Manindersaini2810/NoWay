@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
+import { HiOutlinePlusSm } from 'react-icons/hi'
 import Logo from './Logo'
 
 const Footer = () => {
   return (
-    <footer className="border-t border-gray-100 bg-gray-50/50 py-12 text-gray-600">
+    <footer className="border-t border-gray-200/80 bg-white py-10 text-gray-600">
       <div className="container flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-2">
           <Logo size="md" />
@@ -12,18 +13,14 @@ const Footer = () => {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-6 text-sm font-medium">
-          <Link to="/" className="text-gray-600 transition-colors hover:text-teal-600">
-            Home
-          </Link>
-          <Link to="/search" className="text-gray-600 transition-colors hover:text-teal-600">
-            Search
-          </Link>
-          <Link to="/add-listing" className="text-gray-600 transition-colors hover:text-teal-600">
-            Add Listing
-          </Link>
-          <Link to="/login" className="text-gray-600 transition-colors hover:text-teal-600">
-            Login
+        {/* Right side: only Add Listing badge */}
+        <div className="flex items-center">
+          <Link
+            to="/add-listing"
+            className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-teal-600 text-white shadow-sm hover:bg-teal-700 hover:shadow-teal-600/30 transition-all hover:scale-105"
+          >
+            <HiOutlinePlusSm className="h-4 w-4" />
+            <span>Add Listing</span>
           </Link>
         </div>
       </div>

@@ -21,7 +21,7 @@
   body {
     font-family: var(--font-sans);
     color: #111827;
-    background-color: #ffffff;
+    background-color: #f8fafc;
     margin: 0;
     min-width: 320px;
     min-height: 100vh;
@@ -107,7 +107,7 @@
   }
 
   .card-premium {
-    background-color: #ffffff;
+    background-color: #f8fafc;
     border-radius: 1.5rem; /* rounded-3xl */
     border: 1px solid #e5e7eb;
     overflow: hidden;
