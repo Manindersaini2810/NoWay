@@ -77,9 +77,7 @@ const Auth = () => {
       <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="relative overflow-hidden rounded-4xl bg-slate-950 p-8 text-white shadow-2xl">
           <div className="max-w-lg">
-            <p className="text-sm  tracking-[0.5em] text-gray-200">NoWay</p>
-            {/* <h1 className="mt-6 text-5xl font-semibold leading-tight text-white sm:text-6xl">Design with us</h1>
-            <p className="mt-5 text-lg leading-8 text-slate-300">Access thousands of design resources and templates.</p> */}
+            <p className="text-sm tracking-[0.5em] text-gray-200">NoWay</p>
           </div>
 
           <div className="mt-12 flex justify-center px-4 sm:px-0">
@@ -97,8 +95,8 @@ const Auth = () => {
               <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">{isRegister ? 'Sign up now' : 'Log in'}</p>
               <h2 className="mt-3 text-3xl font-semibold text-slate-900">{isRegister ? 'Create your account' : 'Welcome back'}</h2>
             </div>
-            <div className="inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-slate-100 text-slate-900">
-              <img src={authLogo} alt="NoWay" className="h-8 w-8 object-contain" />
+            <div className="h-12 w-12 overflow-hidden rounded-xl bg-[#1f1f1f] shadow-sm flex-shrink-0">
+              <img src={authLogo} alt="NoWay logo" className="h-full w-full object-cover" />
             </div>
           </div>
 

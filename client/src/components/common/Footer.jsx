@@ -1,14 +1,36 @@
+import { Link } from 'react-router-dom'
+import Logo from './Logo'
+
 const Footer = () => {
   return (
-    <footer className="border-t border-slate-200/70 bg-white py-10 text-slate-700">
-      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 text-sm sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
-        <p className="font-semibold text-slate-900">© 2026 NoWay. Built for modern commercial real estate.</p>
-        <div className="flex flex-wrap gap-4">
-          <a href="/" className="font-medium text-slate-700 transition hover:text-slate-900">Home</a>
-          <a href="/search" className="font-medium text-slate-700 transition hover:text-slate-900">Search</a>
-          <a href="/add-listing" className="font-medium text-slate-700 transition hover:text-slate-900">Add Listing</a>
-          <a href="/login" className="font-medium text-slate-700 transition hover:text-slate-900">Login</a>
+    <footer className="border-t border-gray-100 bg-gray-50/50 py-12 text-gray-600">
+      <div className="container flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-2">
+          <Logo size="md" />
+          <p className="text-xs text-gray-500 max-w-sm mt-1">
+            Empowering modern commercial real estate transactions with intelligent valuation and streamlined workflows.
+          </p>
         </div>
+
+        <div className="flex flex-wrap items-center gap-6 text-sm font-medium">
+          <Link to="/" className="text-gray-600 transition-colors hover:text-teal-600">
+            Home
+          </Link>
+          <Link to="/search" className="text-gray-600 transition-colors hover:text-teal-600">
+            Search
+          </Link>
+          <Link to="/add-listing" className="text-gray-600 transition-colors hover:text-teal-600">
+            Add Listing
+          </Link>
+          <Link to="/login" className="text-gray-600 transition-colors hover:text-teal-600">
+            Login
+          </Link>
+        </div>
+      </div>
+
+      <div className="container mt-8 pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400 gap-4">
+        <p>© 2026 NoWay Estate. All rights reserved.</p>
+        <p>Commercial Real Estate Intelligence</p>
       </div>
     </footer>
   )
