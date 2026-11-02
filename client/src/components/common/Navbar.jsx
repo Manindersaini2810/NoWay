@@ -5,18 +5,28 @@ import Logo from './Logo'
 
 const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(() => {
+    try {
+      const stored = localStorage.getItem('user')
+      return stored ? JSON.parse(stored) : null
+    } catch {
+      return null
+    }
+  })
   const navigate = useNavigate()
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem('user')
-      if (stored) {
-        setUser(JSON.parse(stored))
+    const handleStorageChange = () => {
+      try {
+        const stored = localStorage.getItem('user')
+        setUser(stored ? JSON.parse(stored) : null)
+      } catch {
+        setUser(null)
       }
-    } catch {
-      setUser(null)
     }
+
+    window.addEventListener('storage', handleStorageChange)
+    return () => window.removeEventListener('storage', handleStorageChange)
   }, [])
 
   const handleLogout = () => {

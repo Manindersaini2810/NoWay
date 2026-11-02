@@ -2,7 +2,6 @@ import { useState, useMemo } from 'react'
 import {
   HiOutlineFilter,
   HiOutlineSearch,
-  HiOutlineLocationMarker,
   HiOutlineSparkles,
   HiX,
 } from 'react-icons/hi'

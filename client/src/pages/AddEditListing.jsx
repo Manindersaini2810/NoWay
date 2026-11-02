@@ -1,9 +1,6 @@
 import { useState } from 'react'
 import {
   HiOutlineOfficeBuilding,
-  HiOutlinePhotograph,
-  HiOutlineLocationMarker,
-  HiOutlineDocumentText,
   HiOutlineUpload,
   HiX,
   HiCheck,
