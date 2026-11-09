@@ -314,17 +314,6 @@ stateDiagram-v2
 
 ---
 
-## Design System (60-30-10 Palette)
-
-The platform adheres strictly to the **60-30-10 interior & architectural color distribution**:
-
-| Color Role | Proportion | Color Code | Application |
-|---|---|---|---|
-| **Charcoal** | **60%** (Dominant) | `#12151a` / `#171c22` | Dark sticky navbar, institutional footer, hero contrast backdrop, primary typography, dark card headers, and modal frame. |
-| **Sand** | **30%** (Secondary) | `#faf7f2` / `#f4ede1` | Clean architectural body canvas (`#faf7f2`), warm section surfaces (`#f4ede1`), soft borders (`#e6ded2`), filter panels, and spec grids. |
-| **Electric Blue** | **10%** (Accent) | `#0066ff` / `#0052cc` | High-impact action buttons (*"Search Spaces"*, *"Schedule Tour"*, *"Send Inquiry"*), transaction badges (*"For Lease"*), verified ML badges, active pills, and glows. |
-
----
 
 ## Key Features
 
