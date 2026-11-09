@@ -1,18 +1,20 @@
 const Badge = ({ variant = 'default', children, className = '' }) => {
   const variantStyles = {
-    sale: 'bg-emerald-50 text-emerald-700 border border-emerald-200/80',
-    lease: 'bg-sky-50 text-sky-700 border border-sky-200/80',
-    verified: 'bg-teal-50 text-teal-700 border border-teal-200/80 font-medium',
-    accent: 'bg-amber-50 text-amber-700 border border-amber-200/80',
-    muted: 'bg-gray-100 text-gray-600 border border-gray-200',
-    default: 'bg-slate-100 text-slate-800 border border-slate-200',
+    sale: 'bg-[#1E1E1C] text-[#D8CBB3] border border-[#D8CBB3]/30 shadow-xs',
+    lease: 'bg-[#2F6BFF] text-white shadow-sm shadow-[#2F6BFF]/25',
+    verified: 'bg-[#2F6BFF]/15 text-[#2F6BFF] border border-[#2F6BFF]/30 font-bold',
+    accent: 'bg-[#EDE4D4] text-[#2F6BFF] border border-[#1E1E1C]/15',
+    muted: 'bg-[#EDE4D4] text-[#1E1E1C]/70 border border-[#1E1E1C]/15',
+    charcoal: 'bg-[#1E1E1C] text-[#D8CBB3] border border-[#D8CBB3]/20',
+    sand: 'bg-[#D8CBB3] text-[#1E1E1C] border border-[#1E1E1C]/20',
+    default: 'bg-[#EDE4D4] text-[#1E1E1C] border border-[#1E1E1C]/20',
   }
 
   const selectedVariant = variantStyles[variant.toLowerCase()] || variantStyles.default
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider ${selectedVariant} ${className}`}
+      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${selectedVariant} ${className}`}
     >
       {children}
     </span>
@@ -20,4 +22,3 @@ const Badge = ({ variant = 'default', children, className = '' }) => {
 }
 
 export default Badge
-

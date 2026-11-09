@@ -20,11 +20,11 @@ const Pagination = ({ currentPage = 1, totalPages = 1, onPageChange }) => {
         type="button"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage <= 1}
-        className="inline-flex h-10 px-3 items-center justify-center rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-teal-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        className="inline-flex h-10 px-3 items-center justify-center rounded-xl border border-[#1E1E1C]/20 bg-[#EDE4D4] text-xs font-bold text-[#1E1E1C] hover:bg-white hover:text-[#2F6BFF] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
       >
         <span className="sr-only">Previous</span>
         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
         </svg>
       </button>
 
@@ -33,11 +33,11 @@ const Pagination = ({ currentPage = 1, totalPages = 1, onPageChange }) => {
           <button
             type="button"
             onClick={() => onPageChange(1)}
-            className="h-10 w-10 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-teal-600 transition-colors"
+            className="h-10 w-10 rounded-xl border border-[#1E1E1C]/20 bg-[#EDE4D4] text-xs font-bold text-[#1E1E1C] hover:bg-white hover:text-[#2F6BFF] transition-colors cursor-pointer"
           >
             1
           </button>
-          {startPage > 2 && <span className="px-1 text-gray-400">...</span>}
+          {startPage > 2 && <span className="px-1 text-[#1E1E1C]/50">...</span>}
         </>
       )}
 
@@ -46,10 +46,10 @@ const Pagination = ({ currentPage = 1, totalPages = 1, onPageChange }) => {
           key={page}
           type="button"
           onClick={() => onPageChange(page)}
-          className={`h-10 min-w-10 px-3 rounded-xl text-sm font-medium transition-all ${
+          className={`h-10 min-w-10 px-3 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
             currentPage === page
-              ? 'bg-teal-600 text-white font-semibold shadow-sm shadow-teal-600/30'
-              : 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 hover:text-teal-600'
+              ? 'bg-[#2F6BFF] text-white shadow-md shadow-[#2F6BFF]/25 border border-[#2F6BFF]'
+              : 'border border-[#1E1E1C]/20 bg-[#EDE4D4] text-[#1E1E1C] hover:bg-white hover:text-[#2F6BFF]'
           }`}
         >
           {page}
@@ -58,11 +58,11 @@ const Pagination = ({ currentPage = 1, totalPages = 1, onPageChange }) => {
 
       {endPage < totalPages && (
         <>
-          {endPage < totalPages - 1 && <span className="px-1 text-gray-400">...</span>}
+          {endPage < totalPages - 1 && <span className="px-1 text-[#1E1E1C]/50">...</span>}
           <button
             type="button"
             onClick={() => onPageChange(totalPages)}
-            className="h-10 w-10 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-teal-600 transition-colors"
+            className="h-10 w-10 rounded-xl border border-[#1E1E1C]/20 bg-[#EDE4D4] text-xs font-bold text-[#1E1E1C] hover:bg-white hover:text-[#2F6BFF] transition-colors cursor-pointer"
           >
             {totalPages}
           </button>
@@ -73,11 +73,11 @@ const Pagination = ({ currentPage = 1, totalPages = 1, onPageChange }) => {
         type="button"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage >= totalPages}
-        className="inline-flex h-10 px-3 items-center justify-center rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-teal-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        className="inline-flex h-10 px-3 items-center justify-center rounded-xl border border-[#1E1E1C]/20 bg-[#EDE4D4] text-xs font-bold text-[#1E1E1C] hover:bg-white hover:text-[#2F6BFF] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
       >
         <span className="sr-only">Next</span>
         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
         </svg>
       </button>
     </div>
@@ -85,4 +85,3 @@ const Pagination = ({ currentPage = 1, totalPages = 1, onPageChange }) => {
 }
 
 export default Pagination
-

@@ -10,7 +10,7 @@ const Skeleton = ({ className = '', variant = 'rect' }) => {
 
   return (
     <div
-      className={`animate-pulse bg-gray-200/80 ${selectedVariant} ${className}`}
+      className={`animate-pulse bg-[#1E1E1C]/10 ${selectedVariant} ${className}`}
       aria-hidden="true"
     />
   )

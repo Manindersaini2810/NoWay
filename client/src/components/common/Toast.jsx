@@ -21,8 +21,8 @@ const Toast = ({
 
   const icons = {
     success: (
-      <svg className="h-5 w-5 text-emerald-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+      <svg className="h-5 w-5 text-[#2F6BFF] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
       </svg>
     ),
     error: (
@@ -36,40 +36,38 @@ const Toast = ({
       </svg>
     ),
     info: (
-      <svg className="h-5 w-5 text-teal-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg className="h-5 w-5 text-[#2F6BFF] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     ),
   }
 
   const borderColors = {
-    success: 'border-emerald-200 bg-white text-emerald-950',
-    error: 'border-rose-200 bg-white text-rose-950',
-    warning: 'border-amber-200 bg-white text-amber-950',
-    info: 'border-teal-200 bg-white text-teal-950',
+    success: 'border-[#2F6BFF]/30 bg-[#2F6BFF]/10 text-[#1E1E1C]',
+    error: 'border-rose-300 bg-rose-50 text-rose-950',
+    warning: 'border-amber-300 bg-amber-50 text-amber-950',
+    info: 'border-[#2F6BFF]/30 bg-[#2F6BFF]/10 text-[#1E1E1C]',
   }
 
   return (
     <aside
       aria-label="Notification"
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl border shadow-xl bg-white backdrop-blur-md transition-all duration-300 animate-bounce-short max-w-sm"
+      className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl border border-[#1E1E1C]/15 shadow-xl bg-[#EDE4D4] text-[#1E1E1C] backdrop-blur-md transition-all duration-300 animate-bounce-short max-w-sm"
     >
-      <div className={`p-1 rounded-full ${borderColors[type] || borderColors.info}`}>
+      <div className={`p-1.5 rounded-full ${borderColors[type] || borderColors.info}`}>
         {icons[type] || icons.info}
       </div>
-      <p className="text-sm font-medium text-gray-800 leading-snug">
+      <p className="text-xs font-semibold text-[#1E1E1C] leading-snug">
         {message}
       </p>
       {onClose && (
         <button
           type="button"
           onClick={onClose}
-          className="ml-auto text-gray-400 hover:text-gray-600 transition-colors p-1"
+          className="ml-auto text-[#1E1E1C]/50 hover:text-[#1E1E1C] text-sm font-bold p-1"
           aria-label="Dismiss"
         >
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
+          ✕
         </button>
       )}
     </aside>

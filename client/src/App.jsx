@@ -7,13 +7,13 @@ import PropertyDetail from './pages/PropertyDetail'
 import AddEditListing from './pages/AddEditListing'
 import Auth from './pages/Auth'
 
-const App = () => {
+export default function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-transparent text-slate-800">
+      <div className="min-h-screen bg-[#D8CBB3] text-[#1E1E1C] flex flex-col font-sans selection:bg-[#2F6BFF] selection:text-white">
         <Navbar />
 
-        <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <main className="flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<Search />} />
@@ -29,5 +29,3 @@ const App = () => {
     </BrowserRouter>
   )
 }
-
-export default App

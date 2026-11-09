@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import logoImg from '../../assets/logo.png'
 
-const Logo = ({ size = 'md', light = false, className = '' }) => {
+const Logo = ({ size = 'md', className = '' }) => {
   const sizeMap = {
     sm: {
       img: 'h-8 w-8 rounded-lg',
@@ -25,7 +25,7 @@ const Logo = ({ size = 'md', light = false, className = '' }) => {
       className={`group inline-flex items-center gap-3 transition-opacity duration-200 hover:opacity-95 ${className}`}
     >
       <div
-        className={`${currentSize.img} flex-shrink-0 overflow-hidden bg-[#1f1f1f] shadow-sm transition-transform duration-200 group-hover:scale-105`}
+        className={`${currentSize.img} flex-shrink-0 overflow-hidden bg-[#1E1E1C] shadow-sm transition-transform duration-200 group-hover:scale-105 border border-[#D8CBB3]/30`}
       >
         <img
           src={logoImg}
@@ -35,14 +35,13 @@ const Logo = ({ size = 'md', light = false, className = '' }) => {
       </div>
 
       <span
-        className={`hidden min-[375px]:inline-block font-bold tracking-tight ${currentSize.text} select-none`}
+        className={`hidden min-[375px]:inline-block font-black tracking-tight ${currentSize.text} select-none`}
       >
-        <span className={light ? 'text-white' : 'text-[#111827]'}>NoWay</span>{' '}
-        <span className="text-teal-600">Estate</span>
+        <span className="text-[#D8CBB3]">NoWay</span>{' '}
+        <span className="text-[#2F6BFF]">Commercial</span>
       </span>
     </Link>
   )
 }
 
 export default Logo
-

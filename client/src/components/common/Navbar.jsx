@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { NavLink, Link, useNavigate } from 'react-router-dom'
-import { HiOutlineMenuAlt3, HiX, HiOutlinePlusSm, HiOutlineUser } from 'react-icons/hi'
+import { Menu, X, Plus, User, LogOut } from 'lucide-react'
 import Logo from './Logo'
 
-const Navbar = () => {
+export default function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [user, setUser] = useState(() => {
     try {
@@ -42,28 +42,28 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Search', path: '/search' },
-    ...(isBrokerOrAdmin ? [{ name: 'Add Listing', path: '/add-listing' }] : []),
+    { name: 'Search Spaces', path: '/search' },
+    ...(isBrokerOrAdmin ? [{ name: 'Post Asset', path: '/add-listing' }] : []),
   ]
 
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-gray-200/80 bg-white/85 backdrop-blur-md transition-all duration-300 hover:shadow-sm">
-        <div className="container flex items-center justify-between py-3">
+      <header className="sticky top-0 z-40 bg-[#1E1E1C] text-[#D8CBB3] border-b border-[#383833] transition-all duration-300 shadow-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-3.5">
           {/* Brand Logo */}
           <Logo size="md" />
 
-          {/* Desktop Nav Links with Hover Pill Effects */}
-          <nav className="hidden items-center gap-1 md:flex bg-gray-100/60 p-1.5 rounded-full border border-gray-200/60 backdrop-blur-sm">
+          {/* Desktop Nav Links in Sand on Charcoal */}
+          <nav className="hidden items-center gap-1.5 md:flex bg-[#282825] p-1.5 rounded-full border border-[#383833]">
             {navLinks.map((link) => (
               <NavLink
                 key={link.path}
                 to={link.path}
                 className={({ isActive }) =>
-                  `relative px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${
+                  `px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider transition-all duration-200 ${
                     isActive
-                      ? 'text-teal-700 bg-white shadow-xs font-bold'
-                      : 'text-gray-600 hover:text-teal-600 hover:bg-white/70 hover:scale-[1.02]'
+                      ? 'bg-[#2F6BFF] text-white shadow-sm'
+                      : 'text-[#D8CBB3] hover:text-white hover:bg-white/5'
                   }`
                 }
               >
@@ -72,25 +72,25 @@ const Navbar = () => {
             ))}
           </nav>
 
-          {/* Desktop Auth / User Controls */}
+          {/* Desktop Auth Controls with Electric Blue CTA */}
           <div className="hidden items-center gap-3 md:flex">
             {user ? (
               <div className="flex items-center gap-3">
                 {isBrokerOrAdmin && (
                   <Link
                     to="/add-listing"
-                    className="btn btn-primary py-2 px-3.5 text-xs font-bold flex items-center gap-1.5 rounded-xl shadow-sm hover:-translate-y-0.5 hover:shadow-teal-600/30"
+                    className="py-2 px-3.5 text-xs font-black uppercase tracking-wider rounded-xl bg-[#2F6BFF] hover:bg-[#1E55E6] text-white flex items-center gap-1.5 shadow-md shadow-[#2F6BFF]/25 transition-all"
                   >
-                    <HiOutlinePlusSm className="h-4 w-4" />
-                    <span>Post Property</span>
+                    <Plus size={14} />
+                    <span>Post Asset</span>
                   </Link>
                 )}
 
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gray-50 border border-gray-200">
-                  <div className="h-7 w-7 rounded-full bg-teal-100 text-teal-800 flex items-center justify-center font-bold text-xs uppercase">
-                    {user.name ? user.name.charAt(0) : <HiOutlineUser />}
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#282825] border border-[#383833]">
+                  <div className="h-6 w-6 rounded-full bg-[#2F6BFF] text-white flex items-center justify-center font-bold text-xs uppercase">
+                    {user.name ? user.name.charAt(0) : <User size={12} />}
                   </div>
-                  <span className="text-xs font-bold text-gray-800 max-w-[110px] truncate">
+                  <span className="text-xs font-bold text-[#D8CBB3] max-w-[110px] truncate">
                     {user.name || user.email}
                   </span>
                 </div>
@@ -98,22 +98,23 @@ const Navbar = () => {
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="btn btn-outline py-2 px-3.5 text-xs font-semibold rounded-xl hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 transition-colors"
+                  className="py-2 px-3 rounded-xl text-xs font-bold text-[#D8CBB3] hover:text-white hover:bg-white/5 transition-colors flex items-center gap-1"
                 >
-                  Logout
+                  <LogOut size={14} />
+                  <span>Logout</span>
                 </button>
               </div>
             ) : (
               <>
                 <NavLink
                   to="/login"
-                  className="btn btn-outline py-2 px-4 text-sm font-semibold rounded-xl hover:border-teal-600 hover:text-teal-600 hover:bg-teal-50/60 transition-all hover:-translate-y-0.5"
+                  className="py-2 px-4 text-xs font-bold text-[#D8CBB3] hover:text-white rounded-xl hover:bg-white/5 transition-all"
                 >
-                  Login
+                  Sign In
                 </NavLink>
                 <NavLink
                   to="/register"
-                  className="btn btn-primary py-2 px-5 text-sm font-semibold rounded-xl shadow-md shadow-teal-600/20 hover:-translate-y-0.5 hover:shadow-teal-600/35 transition-all"
+                  className="py-2.5 px-5 text-xs font-black uppercase tracking-wider rounded-xl bg-[#2F6BFF] hover:bg-[#1E55E6] text-white shadow-md shadow-[#2F6BFF]/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
                   Register
                 </NavLink>
@@ -121,15 +122,15 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile Hamburger Toggle Button */}
+          {/* Mobile Hamburger Toggle */}
           <div className="flex items-center md:hidden">
             <button
               type="button"
               onClick={() => setDrawerOpen(true)}
-              className="p-2.5 rounded-xl text-gray-700 hover:text-teal-600 hover:bg-teal-50/80 active:scale-95 transition-all"
-              aria-label="Open mobile menu"
+              className="p-2 rounded-xl text-[#D8CBB3] hover:bg-white/10 active:scale-95 transition-all"
+              aria-label="Open navigation menu"
             >
-              <HiOutlineMenuAlt3 className="h-6 w-6" />
+              <Menu size={22} />
             </button>
           </div>
         </div>
@@ -138,7 +139,7 @@ const Navbar = () => {
       {/* Mobile Drawer Backdrop */}
       {drawerOpen && (
         <div
-          className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs transition-opacity duration-300 md:hidden"
+          className="fixed inset-0 z-50 bg-[#1E1E1C]/75 backdrop-blur-xs transition-opacity duration-300 md:hidden"
           onClick={() => setDrawerOpen(false)}
           aria-hidden="true"
         />
@@ -146,21 +147,21 @@ const Navbar = () => {
 
       {/* Mobile Drawer Content */}
       <div
-        className={`fixed top-0 right-0 z-50 h-full w-[300px] max-w-[85vw] bg-white p-6 shadow-2xl transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between ${
+        className={`fixed top-0 right-0 z-50 h-full w-[290px] max-w-[85vw] bg-[#1E1E1C] text-[#D8CBB3] p-6 shadow-2xl transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between border-l border-[#383833] ${
           drawerOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <div>
-          {/* Drawer Header with Logo and Close Button */}
-          <div className="flex items-center justify-between pb-6 border-b border-gray-100">
+          {/* Drawer Header */}
+          <div className="flex items-center justify-between pb-5 border-b border-[#383833]">
             <Logo size="sm" />
             <button
               type="button"
               onClick={() => setDrawerOpen(false)}
-              className="p-2 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+              className="p-2 rounded-full text-[#D8CBB3] hover:text-white hover:bg-white/5"
               aria-label="Close menu"
             >
-              <HiX className="h-5 w-5" />
+              <X size={18} />
             </button>
           </div>
 
@@ -170,10 +171,10 @@ const Navbar = () => {
               to="/"
               onClick={() => setDrawerOpen(false)}
               className={({ isActive }) =>
-                `px-4 py-3 rounded-xl text-base font-semibold transition-all ${
+                `px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
                   isActive
-                    ? 'bg-teal-50 text-teal-700 font-bold'
-                    : 'text-gray-700 hover:bg-gray-50 hover:text-teal-600'
+                    ? 'bg-[#2F6BFF] text-white'
+                    : 'text-[#D8CBB3] hover:bg-white/5 hover:text-white'
                 }`
               }
             >
@@ -183,52 +184,50 @@ const Navbar = () => {
               to="/search"
               onClick={() => setDrawerOpen(false)}
               className={({ isActive }) =>
-                `px-4 py-3 rounded-xl text-base font-semibold transition-all ${
+                `px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
                   isActive
-                    ? 'bg-teal-50 text-teal-700 font-bold'
-                    : 'text-gray-700 hover:bg-gray-50 hover:text-teal-600'
+                    ? 'bg-[#2F6BFF] text-white'
+                    : 'text-[#D8CBB3] hover:bg-white/5 hover:text-white'
                 }`
               }
             >
-              Search Listings
+              Search Commercial Spaces
             </NavLink>
             {isBrokerOrAdmin && (
               <NavLink
                 to="/add-listing"
                 onClick={() => setDrawerOpen(false)}
                 className={({ isActive }) =>
-                  `px-4 py-3 rounded-xl text-base font-semibold transition-all ${
+                  `px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
                     isActive
-                      ? 'bg-teal-50 text-teal-700 font-bold'
-                      : 'text-gray-700 hover:bg-gray-50 hover:text-teal-600'
+                      ? 'bg-[#2F6BFF] text-white'
+                      : 'text-[#D8CBB3] hover:bg-white/5 hover:text-white'
                   }`
                 }
               >
-                + Add Listing
+                + Post Commercial Asset
               </NavLink>
             )}
           </nav>
         </div>
 
-        {/* Drawer Footer Auth Section */}
-        <div className="pt-6 border-t border-gray-100">
+        {/* Drawer Footer Auth */}
+        <div className="pt-6 border-t border-[#383833]">
           {user ? (
             <div className="space-y-3">
-              <div className="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-200">
-                <div className="h-10 w-10 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-sm">
+              <div className="flex items-center gap-3 p-3 rounded-2xl bg-[#282825] border border-[#383833]">
+                <div className="h-10 w-10 rounded-full bg-[#2F6BFF] text-white flex items-center justify-center font-bold text-sm">
                   {user.name ? user.name.charAt(0) : 'U'}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-bold text-gray-900 truncate">
-                    {user.name}
-                  </p>
-                  <p className="text-xs text-gray-500 truncate">{user.email}</p>
+                  <p className="text-xs font-bold text-[#D8CBB3] truncate">{user.name}</p>
+                  <p className="text-[11px] text-[#9E9179] truncate">{user.email}</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={handleLogout}
-                className="btn btn-outline w-full py-2.5 rounded-xl text-sm font-semibold text-rose-600 border-rose-200 hover:bg-rose-50"
+                className="w-full py-2.5 rounded-xl text-xs font-bold text-white bg-white/10 hover:bg-white/20 transition-colors"
               >
                 Sign Out
               </button>
@@ -238,14 +237,14 @@ const Navbar = () => {
               <NavLink
                 to="/login"
                 onClick={() => setDrawerOpen(false)}
-                className="btn btn-outline w-full py-2.5 text-center font-semibold rounded-xl"
+                className="w-full py-2.5 text-center text-xs font-bold text-[#D8CBB3] border border-[#383833] rounded-xl hover:bg-white/5"
               >
-                Login
+                Sign In
               </NavLink>
               <NavLink
                 to="/register"
                 onClick={() => setDrawerOpen(false)}
-                className="btn btn-primary w-full py-2.5 text-center font-semibold rounded-xl shadow-md"
+                className="w-full py-2.5 text-center text-xs font-black uppercase tracking-wider bg-[#2F6BFF] text-white rounded-xl shadow-md"
               >
                 Create Account
               </NavLink>
@@ -256,5 +255,3 @@ const Navbar = () => {
     </>
   )
 }
-
-export default Navbar
