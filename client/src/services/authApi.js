@@ -1,52 +1,95 @@
-import axiosClient from './axiosClient'
+import axiosClient, { setAccessToken } from './axiosClient'
 
 export const authApi = {
   async register(userData) {
     const response = await axiosClient.post('/auth/register', userData)
-    if (response.data?.data?.accessToken) {
-      localStorage.setItem('accessToken', response.data.data.accessToken)
-      if (response.data.data.refreshToken) {
-        localStorage.setItem('refreshToken', response.data.data.refreshToken)
-      }
-      if (response.data.data.user) {
-        localStorage.setItem('user', JSON.stringify(response.data.data.user))
-      }
+    return response.data
+  },
+
+  async verifyEmail({ email, otp }) {
+    const response = await axiosClient.post('/auth/verify-email', { email, otp })
+    if (response.data?.accessToken) {
+      setAccessToken(response.data.accessToken)
     }
+    return response.data
+  },
+
+  async resendEmailOtp({ email }) {
+    const response = await axiosClient.post('/auth/resend-email-otp', { email })
     return response.data
   },
 
   async login(credentials) {
     const response = await axiosClient.post('/auth/login', credentials)
-    if (response.data?.data?.accessToken) {
-      localStorage.setItem('accessToken', response.data.data.accessToken)
-      if (response.data.data.refreshToken) {
-        localStorage.setItem('refreshToken', response.data.data.refreshToken)
-      }
-      if (response.data.data.user) {
-        localStorage.setItem('user', JSON.stringify(response.data.data.user))
-      }
+    if (response.data?.accessToken) {
+      setAccessToken(response.data.accessToken)
     }
+    return response.data
+  },
+
+  async verify2FA({ tempToken, otp }) {
+    const response = await axiosClient.post('/auth/verify-2fa', { tempToken, otp })
+    if (response.data?.accessToken) {
+      setAccessToken(response.data.accessToken)
+    }
+    return response.data
+  },
+
+  async resend2FAOtp({ tempToken }) {
+    const response = await axiosClient.post('/auth/resend-2fa-otp', { tempToken })
+    return response.data
+  },
+
+  async googleSignIn({ credential, role }) {
+    const response = await axiosClient.post('/auth/google', { credential, role })
+    if (response.data?.accessToken) {
+      setAccessToken(response.data.accessToken)
+    }
+    return response.data
+  },
+
+  async refreshToken() {
+    const response = await axiosClient.post('/auth/refresh')
+    if (response.data?.accessToken) {
+      setAccessToken(response.data.accessToken)
+    }
+    return response.data
+  },
+
+  async logout() {
+    try {
+      await axiosClient.post('/auth/logout')
+    } finally {
+      setAccessToken(null)
+    }
+  },
+
+  async logoutAll() {
+    try {
+      await axiosClient.post('/auth/logout-all')
+    } finally {
+      setAccessToken(null)
+    }
+  },
+
+  async forgotPassword({ email }) {
+    const response = await axiosClient.post('/auth/forgot-password', { email })
+    return response.data
+  },
+
+  async resetPassword({ email, token, newPassword, confirmPassword }) {
+    const response = await axiosClient.post('/auth/reset-password', {
+      email,
+      token,
+      newPassword,
+      confirmPassword,
+    })
     return response.data
   },
 
   async getMe() {
-    const response = await axiosClient.get('/users/me')
+    const response = await axiosClient.get('/auth/me')
     return response.data
-  },
-
-  logout() {
-    localStorage.removeItem('accessToken')
-    localStorage.removeItem('refreshToken')
-    localStorage.removeItem('user')
-  },
-
-  getCurrentUser() {
-    try {
-      const stored = localStorage.getItem('user')
-      return stored ? JSON.parse(stored) : null
-    } catch {
-      return null
-    }
   },
 }
 
