@@ -1,39 +1,16 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { NavLink, Link, useNavigate } from 'react-router-dom'
 import { Menu, X, Plus, User, LogOut } from 'lucide-react'
 import Logo from './Logo'
+import { useAuth } from '../../context/useAuth'
 
 export default function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const [user, setUser] = useState(() => {
-    try {
-      const stored = localStorage.getItem('user')
-      return stored ? JSON.parse(stored) : null
-    } catch {
-      return null
-    }
-  })
+  const { user, logout } = useAuth()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    const handleStorageChange = () => {
-      try {
-        const stored = localStorage.getItem('user')
-        setUser(stored ? JSON.parse(stored) : null)
-      } catch {
-        setUser(null)
-      }
-    }
-
-    window.addEventListener('storage', handleStorageChange)
-    return () => window.removeEventListener('storage', handleStorageChange)
-  }, [])
-
-  const handleLogout = () => {
-    localStorage.removeItem('accessToken')
-    localStorage.removeItem('refreshToken')
-    localStorage.removeItem('user')
-    setUser(null)
+  const handleLogout = async () => {
+    await logout()
     setDrawerOpen(false)
     navigate('/login')
   }
