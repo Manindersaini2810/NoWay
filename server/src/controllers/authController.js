@@ -1,5 +1,7 @@
 import bcrypt from 'bcrypt'
 import crypto from 'node:crypto'
+import jwt from 'jsonwebtoken'
+import { config } from '../config/index.js'
 import User from '../models/User.js'
 import OTP from '../models/OTP.js'
 import {
@@ -583,7 +585,7 @@ export const refreshToken = async (req, res, next) => {
 
     let payload
     try {
-      payload = jwt.verify(rawToken, process.env.JWT_REFRESH_SECRET || 'change_this_refresh_secret')
+      payload = jwt.verify(rawToken, config.jwtRefreshSecret)
     } catch {
       clearRefreshTokenCookie(res)
       return res.status(401).json({

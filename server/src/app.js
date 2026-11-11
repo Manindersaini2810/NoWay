@@ -14,6 +14,9 @@ import { errorHandler } from './middleware/errorHandler.js'
 
 const app = express()
 
+// Trust reverse proxy headers (required for Render, Vercel, Railway rate-limiting & secure cookies)
+app.set('trust proxy', 1)
+
 // 1. Security HTTP Headers
 app.use(
   helmet({
@@ -23,19 +26,23 @@ app.use(
 
 // 2. CORS with Credentials (for HttpOnly refresh cookies)
 const allowedOrigins = [
-  process.env.CLIENT_URL || 'http://localhost:5173',
+  process.env.CLIENT_URL,
   'http://localhost:5173',
   'http://127.0.0.1:5173',
-]
+].filter(Boolean)
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps, curl, or Postman)
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (
+        !origin ||
+        allowedOrigins.includes(origin) ||
+        origin.endsWith('.vercel.app') ||
+        process.env.NODE_ENV !== 'production'
+      ) {
         return callback(null, true)
       }
-      return callback(null, true) // permissive for local development
+      return callback(new Error('Not allowed by CORS'))
     },
     credentials: true,
   })

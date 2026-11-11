@@ -52,7 +52,7 @@ export const setRefreshTokenCookie = (res, refreshToken) => {
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction ? 'strict' : 'lax',
+    sameSite: isProduction ? 'none' : 'lax', // 'none' + secure allows cross-origin Vercel <-> Render cookies
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in ms
     path: '/api/auth', // restricted to auth endpoints for security
   })
@@ -66,7 +66,7 @@ export const clearRefreshTokenCookie = (res) => {
   res.clearCookie('refreshToken', {
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction ? 'strict' : 'lax',
+    sameSite: isProduction ? 'none' : 'lax',
     path: '/api/auth',
   })
 }
